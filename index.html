@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<title>Di punch</title>
+	<meta name="viewport" content="width=device-width,initial-scale=1.0">
+	<link rel="stylesheet" href="./css/style.css">
+</head>
+<body>
+	<div class="container" id="index_div">
+		<div class="index_header">Welcome</div>
+		<div class="index_form">
+			<div>
+				<form action="" method="post">
+					<div>
+						<span class="item_name">Username</span>
+						<input type="text" name="username" id="login_username">
+					</div>
+	
+					<div>
+						<span class="item_name">Password</span>
+						<input type="password" name="password" id="login_password">
+					</div>
+	
+					<div class="action">
+						<span class="btn" id="login">Login</span>
+						<span class="btn" id="reg_href">Register</span>
+					</div>
+				</form>		
+			</div>
+		</div>
+		<div class="index_footer"></div>
+	</div>
+</body>
+
+<div class="container" id="register_div">
+	<div class="index_header">Welcome To Register</div>
+	<div class="index_form">
+		<div>
+			<form action="" method="post">
+				<div>
+					<span class="item_name">Username</span>
+					<input type="text" name="username" id="reg_username">
+				</div>
+
+				<div>
+					<span class="item_name">Password</span>
+					<input type="password" name="password" id="reg_password">
+				</div>
+
+				<div>
+					<span class="item_name">Confirm Password</span>
+					<input type="password" name="confirm_password" id="reg_confirm_password">
+				</div>
+
+				<div class="action">
+					<span class="btn" id="register">Register Now</span>
+				</div>
+			</form>		
+		</div>
+	</div>
+	<div class="index_footer"></div>
+</div>
+
+<div id="notice">
+	<div id="notice_div">
+		<div id="notice_title"></div>
+		<div id="notice_info"></div>
+		<div id="notice_action">
+			<div id="notice_cancel">Go To Check</div>
+		</div>
+	</div>
+</div>
+
+<script src="./javascript/util.js"></script>
+<script src="./javascript/index.js"></script>
+</html>

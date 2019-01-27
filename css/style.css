@@ -1,0 +1,51 @@
+/**
+ * 
+ */
+a {text-decoration: none; }
+
+/**
+ *
+ */
+.container{ max-width:100%; margin: 0 auto;}
+
+
+/**
+ * 登录和注册界面
+ */
+ #register_div {display: none;}
+.index_header { padding-top:10%; height:4rem; max-width:100%; color: orange; font-size:2rem; text-align:center; line-height: 4rem;}
+.index_form { width: 100%; font-size: 1.5rem; padding-top: 15%; }
+.index_form  div{ width: 90%; padding-left:5%; margin-top:2rem; text-align:center;}
+.index_form .item_name { color:#888; display: block; text-align:left; }
+.index_form input { width: 100%; height:2rem; border:2px solid #888; border-radius:5px; font-size:1.5rem; color: #888; line-height:2rem; text-indent: 0.5rem; }
+.index_form .btn { width:20%; padding:0.3rem 1rem; margin-right:5%;  height:2em; font-size:1.5rem; line-height:2rem; color:#888; border:2px solid #888; border-radius:5px; }
+.index_form .action{ margin-top:4rem;}
+
+
+/**
+ * 消息提示框
+ */
+#notice {width: 100%; height: 100%; color: red; background:black;opacity: 0.8; position: absolute;left:0; top:0; font-size:1.3rem; font-weight:bold; display:none; text-align: center; }
+#notice_div { position: relative; left: 5%; top:20%; width:90%; } 
+#notice_title { width:100%; height:5rem; border:1px solid #888; border-radius: 5px 5px 0 0; line-height: 5rem;  }
+#notice_info {width:100%; height:7rem; border:1px solid #888; line-height: 2rem; padding-top: 3rem;  }
+#notice_action {width:100%; height:5rem;   border:1px solid #888; border-radius:0 0 5px 5px; line-height: 5rem; }
+#notice_cancel {color: red; line-height: 5rem; }
+
+
+/**
+ * 用户个人中心
+ */ 
+.project_total { width: 100%; height:100%; font-size: 1rem; text-align: center; margin-top:10%; color: #666; }
+.project_list{ width:100%; background:#eee; border-radius: 5px;}
+.project_header { width:100%; font-size: 1.2rem; font-weight: bold; }
+.project_header tr { height:3.5rem;  }
+/* .project_name { }
+.project_start { }
+.project_consist {}
+.punch_one {} */
+.project_item {height:3rem; }
+.project_item .punch_action { max-width:2rem; max-height:2rem; border: 1px solid #22b3d5; border-radius: 2rem; }
+#user_action { width:100%; position: fixed; bottom: 0; left: 0; }
+#user_action td { height: 2rem; width:45%; border:2px solid #888; color:#666; border-radius: 5px; text-align: center; }
+.project_item .delete_action { max-width:2rem; max-height:2rem; border:none; }
