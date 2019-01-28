@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<title>Di punch - personal center</title>
+	<meta name="viewport" content="width=device-width,initial-scale=1.0">
+	<link rel="stylesheet" href="./css/style.css">
+</head>
+<body>
+	<div class="container" id="index_div">
+		<div class="index_header">Add punch item</div>
+		<div class="index_form">
+			<div>
+				<form action="" method="post">
+					<div>
+						<span class="item_name">Item Name</span>
+						<input type="text" name="item_name" id="item_name">
+					</div>
+	
+					<div>
+						<span class="item_name">Start Date</span>
+						<input type="date" name="start_date" id="start_date">
+					</div>
+	
+					<div class="action">
+						<span class="btn" id="add_action" onclick="addPunchItem()">add now</span>
+					</div>
+				</form>		
+			</div>
+		</div>
+	</div>
+</body>
+
+<div id="notice">
+	<div id="notice_div">
+		<div id="notice_title"></div>
+		<div id="notice_info"></div>
+		<div id="notice_action">
+			<div id="notice_cancel">Go To Check</div>
+		</div>
+	</div>
+</div>
+
+<script src="./javascript/util.js"></script>
+<script src="./javascript/add.js"></script>
+</html>

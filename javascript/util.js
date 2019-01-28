@@ -1,4 +1,3 @@
-
 /**
  * 发起ajax请求
  * @param  {[String]} url    [description]
@@ -33,6 +32,23 @@ function ajax(url, method, data, asyn = false) {
 	}
 }
 
+function createNoticeDiv() {
+	var notice = document.getElementById("notice");
+
+	var notice_innerHtml = "";
+	notice_innerHtml += '<div id="notice_div">';
+	notice_innerHtml += 	'<div id="notice_title"></div>';
+	notice_innerHtml += 	'<div id="notice_info"></div>';
+	notice_innerHtml += 	'<div id="notice_action">';
+	notice_innerHtml += 		'<span id="notice_cancel" onclick="hideNotice()">Cancel</span>';
+	notice_innerHtml += 		'<span id="notice_confirm" onclick="hideNotice()">Confirm</span>';
+	notice_innerHtml += 	'</div>';
+	notice_innerHtml += '</div>';
+	
+	notice.innerHTML = 	notice_innerHtml;
+}
+
+
 /**
  * 显示提示框，并且打印提示信息
  * @param {string} title 
@@ -50,6 +66,7 @@ function showMessage(title, info) {
 	notice.style.display = "block";
 
 }
+
 
 /**
  * 隐藏提示框
@@ -151,27 +168,57 @@ function register() {
 	}
 }
 
-/**
- * 为每一个打卡图片，绑定打卡事件
- */
-function punch() {
 
+/**
+ * 获取用户的项目列表 并显示出来
+ */
+function getItemList() {
+	var item_list = ajax("getitemList.php", "get", {});
+
+	var item_tbody = document.getElementById("item_tbody");
+	/*
+	<tr class="item_item">
+		<td>跑步</td>
+		<td>2019-01-05</td>
+		<td>5天</td>
+		<td>
+			<img src="./images/punch.png" onclick="punch_action(0, 5)" class="punch_action>
+			<img src="./images/delete.png" onclick="deletePunchItem(0, 5)" class="delete_action" >
+		</td>
+	</tr>
+	*/
+
+	// 拼接
+	var content = "";
+	for (i = 0; i < item_list.length; i++) {
+		content += '<tr class="item_item">';
+		content += 		'<td>' + item_list[i]["item_name"] + '</td>';
+		content += 		'<td>' + item_list[i]["start_date"] + '</td>';
+		content += 		'<td>' + item_list[i]["consist"] + '天</td>';
+		content += 		'<td>';
+		content += 			'<img src="./images/delete.png" class="delete_action" onclick="deletePunchItem(' + i + ', ' + item_list[i]["id"] + ')">';
+		content += 			'<img src="./images/punch.png" class="punch_action" onclick="punchAction(' + i + ', ' + item_list[i]["id"] + ')">';
+		content += 		'</td>';
+		content += '</tr>';
+	}
+
+	item_tbody.innerHTML = content;
 }
+
 
 
 /**
  * 将打卡的标志 切换为 删除图标
  */
-function changeToDelele() {
-	var imgList = document.getElementById("project_total").getElementsByTagName("img");
-	for (i = 0; i < imgList.length; i++) {
-		imgList[i]["src"]= "./images/delete.png";
-		imgList[i].className = "delete_action";
+function changeToDelete() {
+	var punch_icons = document.getElementById("item_tbody").getElementsByClassName("punch_action");
+	var delete_icons = document.getElementById("item_tbody").getElementsByClassName("delete_action");
+	for (i = 0; i < punch_icons.length; i++) {
+		punch_icons[i].style.display = "none";
+		delete_icons[i].style.display = "inline";
 	}
-	this.id = "cancel_delete";
-	this.innerHTML = "Cancel to delete";
-
-	this.onclick = changeToPunch;
+	document.getElementById("delete").style.display = "none";
+	document.getElementById("cancel_delete").style.display = "table-cell";
 }
 
 
@@ -179,27 +226,88 @@ function changeToDelele() {
  * 将删除的图标 切换为 打卡图标
  */
 function changeToPunch() {
-	var imgList = document.getElementById("project_total").getElementsByTagName("img");
-	for (i = 0; i < imgList.length; i++) {
-		imgList[i]["src"]= "./images/punch.png";
-		imgList[i].className = "punch_action";
+	var punch_icons = document.getElementById("item_total").getElementsByClassName("punch_action");
+	var delete_icons = document.getElementById("item_total").getElementsByClassName("delete_action");
+	for (i = 0; i < punch_icons.length; i++) {
+		punch_icons[i].style.display = "inline";
+		delete_icons[i].style.display = "none";
 	}
-	this.id = "delete";
-	this.innerHTML = "Delete Punch";
 
-	this.onclick = changeToDelele;
+	document.getElementById("delete").style.display = "table-cell";
+	document.getElementById("cancel_delete").style.display = "none";
 }
 
-/**
- * 为所有的打卡图标添加事件
- */
-function addPunchAction() {
-	project_id = this.project_id;
 
-	var result = ajax("punch.php", "post", {"project_id":project_id});
+
+/**
+ * 进行打卡操作
+ * @param {int} listid 该项在页面中的顺序
+ * @param {*} item_id
+ */
+function punchAction(list_id, item_id) {
+	var result = ajax("punch.php", "post", {"item_id":item_id});
 	if (result['flag']) {
-		showMessage("Cheer Up", "keep going")
+		var item_consist = document.getElementById("item_tbody").getElementsByTagName("tr")[list_id].getElementsByTagName("td")[2];
+		var old_record = parseInt(item_consist.innerHTML);
+		old_record++;
+		item_consist.innerHTML = old_record + "天";
+		// showMessage("Cheer Up", "keep going");
 	} else {
 		showMessage("Punch faild", "please retry later");
 	}
+}
+
+
+/**
+ * 一次性为所有项目打卡
+ */
+function punchAll() {
+	var item_list = document.getElementById("item_tbody").getElementsByTagName("tr");
+	for (i = 0; i < item_list.length; i++) {
+		var item_consist = item_list[i].getElementsByTagName("td")[2];
+		var old_record = parseInt(item_consist.innerHTML);
+		old_record++;
+		item_consist.innerHTML = old_record + "天";
+	}
+	
+	/**
+	 * 发请求，一次性打卡
+	 */
+	//ajax("punchAll.php", "post", {});
+}
+
+
+/**
+ * 添加item项目
+ */
+function addPunchItem() {
+	var item_name = document.getElementById("item_name").value;
+	var start_date = document.getElementById("start_date").value;
+
+	if (item_name.replace(/\s/g, '').length == 0) {
+		showMessage("Warning", "item name can't be empty");
+		return;
+	}
+	var result = ajax("add.php", "post", {"item_name" : item_name, "start_date" : start_date});
+	if (! result['flag']) { 
+		showMessage("Add Item Failed", result['msg']);
+	} else {
+		// 跳转
+		showMessage("Add successful", "This page will redirect in 2 second");
+		location.href = "user.html";
+	}
+}
+
+
+/**
+ * 
+ */
+function deletePunchItem(list_id, item_id) {
+	var parent = document.getElementById("item_tbody");
+	var delete_item = parent.getElementsByTagName("tr")[list_id];
+	parent.removeChild(delete_item);
+}
+
+window.onload = function() {
+	createNoticeDiv();
 }

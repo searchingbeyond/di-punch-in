@@ -9,60 +9,34 @@
 <body>
 	<div class="container">
 		<div class="index_header">Punch List</div>
-		<div class="project_total" id="project_total">
-			<table class="project_list">
-				<thead class="project_header">
-					<th class="project_name">名称</th>
-					<th class="project_start">开始时间</th>
-					<th class="project_consist">已坚持</th>
-					<td class="punch_one">打卡</td>
+		<div class="item_total" id="item_total">
+			<table class="item_list">
+				<thead class="item_header">
+					<th class="item_name">Item</th>
+					<th class="item_start">Start</th>
+					<th class="item_consist">Consist</th>
+					<td class="punch_one">Punch</td>
 				</thead>
-				<tbody>
-					<tr class="project_item">
-						<td>跑步</td>
-						<td>2019-01-05</td>
-						<td>5天</td>
-						<td><img src="./images/punch.png" class="punch_action"></td>
-					</tr>
-					<tr class="project_item">
-						<td>跑步</td>
-						<td>2019-01-05</td>
-						<td>5天</td>
-						<td><img src="./images/punch.png"  class="punch_action"></td>
-					</tr>
-					<tr class="project_item">
-						<td>跑步</td>
-						<td>2019-01-05</td>
-						<td>5天</td>
-						<td><img src="./images/punch.png"  class="punch_action"></td>
-					</tr>
+				<tbody id="item_tbody">
 				</tbody>
 			</table>
 		</div>
 		<table id="user_action">
 			<tr>
-				<td class="btn" id="add">Add Punch</td>
-				<td class="btn" id="delete">Delete Punch</td>
+				<td class="btn" id="add"><a href="add.html">Add Punch</a></td>
+				<td class="btn" id="delete" onclick="changeToDelete()">Delete Punch</td>
+				<td class="btn" id="cancel_delete" onclick="changeToPunch()">Cancel to delete</td>
 			</tr>
 			<tr>
-				<td class="btn" id="one_key_punch">Punch All</td>
-				<td class="btn" id="quit">Quit</td>
+				<td class="btn" id="one_key_punch" onclick="punchAll()">Punch All</td>
+				<td class="btn" id="quit" onclick="quit()">Quit</td>
 			</tr>
 		</table>
 	</div>
-
+	<div id="notice"></div>
 </body>
-
-<div id="notice">
-	<div id="notice_div">
-		<div id="notice_title"></div>
-		<div id="notice_info"></div>
-		<div id="notice_action">
-			<div id="notice_cancel">Go To Check</div>
-		</div>
-	</div>
-</div>
-
 <script src="./javascript/util.js"></script>
-<script src="./javascript/user.js"></script>
+<script>
+	getItemList();
+</script>
 </html>

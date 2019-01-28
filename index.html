@@ -23,8 +23,8 @@
 					</div>
 	
 					<div class="action">
-						<span class="btn" id="login">Login</span>
-						<span class="btn" id="reg_href">Register</span>
+						<span class="btn" id="login" onclick="login()">Login</span>
+						<span class="btn" id="reg_href" onclick="showRegisterPage()">Register</span>
 					</div>
 				</form>		
 			</div>
@@ -40,7 +40,7 @@
 			<form action="" method="post">
 				<div>
 					<span class="item_name">Username</span>
-					<input type="text" name="username" id="reg_username">
+					<input type="text" name="username" id="reg_username" onblur="checkUserExists()">
 				</div>
 
 				<div>
@@ -54,24 +54,13 @@
 				</div>
 
 				<div class="action">
-					<span class="btn" id="register">Register Now</span>
+					<span class="btn" id="register" onclick="register()">Register Now</span>
 				</div>
 			</form>		
 		</div>
 	</div>
-	<div class="index_footer"></div>
 </div>
-
-<div id="notice">
-	<div id="notice_div">
-		<div id="notice_title"></div>
-		<div id="notice_info"></div>
-		<div id="notice_action">
-			<div id="notice_cancel">Go To Check</div>
-		</div>
-	</div>
-</div>
-
 <script src="./javascript/util.js"></script>
 <script src="./javascript/index.js"></script>
 </html>
+
