@@ -1,8 +1,8 @@
 /**
  * 发起ajax请求
  * @param  {[String]} url    [description]
- * @param  {[object]} data   [description]
  * @param  {[string]} method [get/post]
+ * @param  {[object]} data   [json-formated data]
  * @return {[object]}        [description]
  */
 function ajax(url, method, data, asyn = false) {
@@ -20,18 +20,22 @@ function ajax(url, method, data, asyn = false) {
 				if((xhr.status==200 && xhr.status<300) || xhr.status==304){
 					
 				} else {
-					console.log("请求失败，响应码：" + xhr.status)
+					console.log("ajax request faild, response status code ：" + xhr.status)
 					return "";
 				}
 			}
 		}
-	} else {  // 采用同步方式
+	} else {  // syn
 		data = null; 
 		data = JSON.parse(xhr.responseText);
 		return data;
 	}
 }
 
+
+/**
+ * 填充提示框的内容
+ */
 function createNoticeDiv() {
 	var notice = document.getElementById("notice");
 
@@ -155,7 +159,7 @@ function register() {
 	}
 
 	var data = {
-        "username" : username,
+		"username" : username,
 		"password" : password
 	};
 
@@ -241,8 +245,8 @@ function changeToPunch() {
 
 /**
  * 进行打卡操作
- * @param {int} listid 该项在页面中的顺序
- * @param {*} item_id
+ * @param {int} listid 		[该项在页面中的顺序]
+ * @param {int} item_id
  */
 function punchAction(list_id, item_id) {
 	var result = ajax("punch.php", "post", {"item_id":item_id});
@@ -300,12 +304,21 @@ function addPunchItem() {
 
 
 /**
- * 
+ * 删除某一项（移除DOM，并发起请求）
+ * @param {int} list_id 
+ * @param {int} item_id 
  */
 function deletePunchItem(list_id, item_id) {
 	var parent = document.getElementById("item_tbody");
 	var delete_item = parent.getElementsByTagName("tr")[list_id];
-	parent.removeChild(delete_item);
+
+	var result = ajax("delete.php", "post", {"item_id" : item_id});
+
+	if (result['flag']) {
+		parent.removeChild(delete_item);
+	} else {
+		showMessage("Notice", result['msg']);
+	}
 }
 
 window.onload = function() {
